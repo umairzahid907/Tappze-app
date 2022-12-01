@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tappze.R
+import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentProfileBinding
 import com.example.tappze.util.*
 import com.squareup.picasso.Picasso
@@ -45,33 +46,22 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
                     toast(it.error)
                 }
                 is UiState.Success -> {
-                    links = it.data?.links
-                    val array: Array<Pair<String, String>>? = links?.toList()?.toTypedArray()
-                    adapter = links?.let { RVAdapter(array, this) }!!
-                    binding.rvGrid.adapter = adapter
-                    binding.tvName.text = it.data?.name
-//                    binding.profilePhoto.load(it.data?.image){
-//                        placeholder(R.drawable.placeholder_white)
-//                    }
-                    Picasso.get()
-                        .load(it.data?.image)
-                        .placeholder(R.drawable.placeholder)
-                        .into(binding.profilePhoto)
+                    it.data?.let { it1 -> updateUI(it1) }
                 }
             }
         }
+    }
 
-        viewModel.deleteUser.observe(viewLifecycleOwner){
-            when(it){
-                is UiState.Loading -> {
-                }
-                is UiState.Failure -> {
-                }
-                is UiState.Success -> {
-                    findNavController().navigate(R.id.welcomeFragment)
-                }
-            }
-        }
+    private fun updateUI(user: User){
+        links = user.links
+        val array: Array<Pair<String, String>>? = links?.toList()?.toTypedArray()
+        adapter = links?.let { RVAdapter(array, this) }!!
+        binding.rvGrid.adapter = adapter
+        binding.tvName.text = user.name
+        Picasso.get()
+            .load(user.image)
+            .placeholder(R.drawable.placeholder)
+            .into(binding.profilePhoto)
     }
 
 }

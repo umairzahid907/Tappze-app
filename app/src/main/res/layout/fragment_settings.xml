@@ -16,6 +16,7 @@
             android:id="@+id/img_tappze"
             android:layout_width="200dp"
             android:layout_height="150dp"
+            android:layout_marginTop="40dp"
             android:maxHeight="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/tappze"
@@ -34,11 +35,12 @@
             android:text="@string/subscriptions"
             android:textColor="@color/black"
             android:textSize="25sp"
-            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@id/tvPurchase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tvPurchase"
-            app:layout_constraintTop_toBottomOf="@+id/img_tappze" />
+            app:layout_constraintTop_toBottomOf="@+id/img_tappze"
+            app:layout_constraintVertical_bias="0.100000024"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/tvPurchase"
@@ -94,32 +96,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:clickable="true"
             android:gravity="center"
             android:minHeight="48dp"
             android:text="@string/sign_out"
             android:textColor="@color/red"
             android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/toggleButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvContact"
-            app:layout_constraintBottom_toTopOf="@id/tvProfile"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvContact" />
 
-        <TextView
-            android:id="@+id/tvProfile"
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:text="@string/profile"
-            android:textColor="@color/black"
-            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvSignOut"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:singleSelection="true"
+            app:selectionRequired="true">
 
-            />
+            <Button
+                android:id="@+id/btnOn"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile On" />
+
+            <Button
+                android:id="@+id/btnOff"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile Off" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

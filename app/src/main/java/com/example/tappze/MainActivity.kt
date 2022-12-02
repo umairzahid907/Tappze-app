@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.example.tappze.databinding.ActivityMainBinding
-import com.example.tappze.fragments.HomeFragment
 import com.example.tappze.util.UiState
 import dagger.hilt.android.AndroidEntryPoint
 

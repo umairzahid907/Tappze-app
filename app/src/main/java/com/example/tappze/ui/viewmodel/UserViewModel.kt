@@ -1,4 +1,4 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

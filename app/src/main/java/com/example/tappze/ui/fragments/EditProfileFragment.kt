@@ -1,4 +1,4 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -16,6 +16,7 @@ import com.example.tappze.R
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentEditProfileBinding
 import com.example.tappze.di.Constants
+import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.squareup.picasso.Picasso

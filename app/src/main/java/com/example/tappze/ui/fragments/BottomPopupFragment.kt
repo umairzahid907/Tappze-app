@@ -1,4 +1,4 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.app.Dialog
 import android.content.Context
@@ -10,12 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.tappze.R
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentBottomPopupBinding
 import com.example.tappze.di.Constants
+import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.os.Bundle
 import android.view.View

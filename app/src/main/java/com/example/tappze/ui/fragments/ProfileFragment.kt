@@ -1,7 +1,6 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -9,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tappze.R
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentProfileBinding
+import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.*
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint

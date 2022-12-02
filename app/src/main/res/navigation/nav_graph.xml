@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.tappze.fragments.ProfileFragment"
+        android:name="com.example.tappze.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/nfcFragment"
-        android:name="com.example.tappze.fragments.NfcFragment"
+        android:name="com.example.tappze.ui.fragments.NfcFragment"
         android:label="fragment_nfc"
         tools:layout="@layout/fragment_nfc" />
     <fragment
         android:id="@+id/shareFragment"
-        android:name="com.example.tappze.fragments.ShareFragment"
+        android:name="com.example.tappze.ui.fragments.ShareFragment"
         android:label="fragment_share"
         tools:layout="@layout/fragment_share" />
     <fragment
         android:id="@+id/analyticsFragment"
-        android:name="com.example.tappze.fragments.AnalyticsFragment"
+        android:name="com.example.tappze.ui.fragments.AnalyticsFragment"
         android:label="fragment_analytics"
         tools:layout="@layout/fragment_analytics" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.tappze.fragments.SettingsFragment"
+        android:name="com.example.tappze.ui.fragments.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings">
         <action
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.example.tappze.fragments.EditProfileFragment"
+        android:name="com.example.tappze.ui.fragments.EditProfileFragment"
         android:label="EditProfileFragment"
         tools:layout="@layout/fragment_edit_profile"/>
     <include app:graph="@navigation/app_navigation" />

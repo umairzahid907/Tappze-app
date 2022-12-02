@@ -79,10 +79,13 @@ class AuthRepositoryImp(
     override fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                it.user?.uid?.let { it1 -> addUserToLocalDatabase(it1) }
-                result.invoke(
-                    UiState.Success("Logged in successfully")
-                )
+                CoroutineScope(Dispatchers.Main).launch {
+                    it.user?.uid?.let { it1 -> addUserToLocalDatabase(it1) }
+                }.invokeOnCompletion {
+                    result.invoke(
+                        UiState.Success("Logged in successfully")
+                    )
+                }
             }
             .addOnFailureListener { error ->
                 result.invoke(

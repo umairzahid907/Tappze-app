@@ -1,6 +1,7 @@
 package com.example.tappze.fragments
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.net.Uri
 import android.widget.Toast
 import android.os.Bundle
@@ -75,6 +76,15 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
                     startForProfileImageResult.launch(intent)
                 }
         }
+        binding.btnDob.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                requireContext(), { _, year, month, dayOfMonth ->
+                    val date = "$dayOfMonth/${month + 1}/$year"
+                    binding.btnDob.text = date
+                }, 1990, 0, 1
+            )
+            datePickerDialog.show()
+        }
         observer()
 
     }
@@ -94,6 +104,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
                 user?.company = binding.edtCompany.text.toString()
                 user?.links = links!!
                 user?.gender = binding.ddGender.editableText.toString()
+                user?.dob = binding.btnDob.text as String
                 binding.edtName.error = null
                 if(mProfileUri != null){
                     mProfileUri?.let { it1 ->
@@ -140,6 +151,9 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
                        view.edtPhone.setText(it.data?.number)
                        view.edtCompany.setText(it.data?.company)
                        view.ddGender.setText(it.data?.gender, false)
+                       if(it.data?.dob?.isNotEmpty() == true){
+                           view.btnDob.text = it.data.dob
+                       }
                        Picasso.get()
                            .load(it.data?.image)
                            .placeholder(R.drawable.placeholder)

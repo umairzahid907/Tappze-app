@@ -20,5 +20,6 @@ data class User(
     var links: Map<String, String> = mapOf("key" to "value"),
     var image: String = "",
     var gender: String = "",
-    var status: Boolean = true
+    var status: Boolean = true,
+    var dob: String = ""
 ) : Parcelable

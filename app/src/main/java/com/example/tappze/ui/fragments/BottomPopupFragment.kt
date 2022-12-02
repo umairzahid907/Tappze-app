@@ -115,20 +115,6 @@ class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetD
         dismiss()
     }
 
-    private fun openApp(packageName: String, playStoreLink: String, inputFromUser: String?) {
-        try {
-            if (isAppInstalled(packageName, context) == true)
-            {
-                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(playStoreLink)))
-            } else {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(playStoreLink))
-                context?.startActivity(intent)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     private fun isAppInstalled(packageName: String, context: Context?): Boolean? {
         return try {
             val packageManager = context?.packageManager

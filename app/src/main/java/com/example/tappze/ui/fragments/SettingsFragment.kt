@@ -61,6 +61,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             )
             startActivity(urlIntent)
         }
+        binding.tvSubscriptions.setOnClickListener {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://tappze.com")
+            )
+            startActivity(urlIntent)
+        }
         binding.tvContact.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.putExtra(Intent.EXTRA_EMAIL, "support@tappze.com")

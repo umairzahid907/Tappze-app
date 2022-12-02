@@ -1,14 +1,17 @@
 package com.example.tappze.fragments
 
 import android.app.Dialog
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.fragment.app.FragmentTransaction
+import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.tappze.R
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentBottomPopupBinding
@@ -16,6 +19,7 @@ import com.example.tappze.di.Constants
 import com.example.tappze.util.*
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetDialogFragment(R.layout.fragment_bottom_popup) {
@@ -60,6 +64,18 @@ class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetD
             }
             dial?.show()
         }
+
+        binding.btnOpen.setOnClickListener {
+            val launchIntent: Intent? =
+                this.context?.packageManager?.getLaunchIntentForPackage("com.google.android.${link.first.lowercase()}")
+            if (launchIntent != null) {
+                launchIntent.putExtra(Intent.ACTION_VIEW, Uri.parse("https://www.${link.first.lowercase()}.com/${link.second}"))
+                startActivity(launchIntent)
+            } else {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.${link.first.lowercase()}.com/${link.second}"))
+                context?.startActivity(intent)
+            }
+        }
     }
 
 
@@ -99,4 +115,26 @@ class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetD
         dismiss()
     }
 
+    private fun openApp(packageName: String, playStoreLink: String, inputFromUser: String?) {
+        try {
+            if (isAppInstalled(packageName, context) == true)
+            {
+                context?.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(playStoreLink)))
+            } else {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(playStoreLink))
+                context?.startActivity(intent)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun isAppInstalled(packageName: String, context: Context?): Boolean? {
+        return try {
+            val packageManager = context?.packageManager
+            packageManager?.getApplicationInfo(packageName, 0)?.enabled
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
 }

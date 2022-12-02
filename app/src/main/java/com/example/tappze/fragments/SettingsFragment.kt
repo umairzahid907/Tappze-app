@@ -1,5 +1,7 @@
 package com.example.tappze.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -50,6 +52,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     }
                 }
             }
+        }
+        binding.tvPurchase.setOnClickListener {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://tappze.com")
+            )
+            startActivity(urlIntent)
+        }
+        binding.tvContact.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.putExtra(Intent.EXTRA_EMAIL, "support@tappze.com")
+            intent.type = "message/rfc822"
+            startActivity(intent)
         }
     }
 

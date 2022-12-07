@@ -72,7 +72,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
         }
         binding.selectPhoto.setOnClickListener {
             ImagePicker.with(this)
-                .galleryOnly()
+//                .galleryOnly()
                 .createIntent { intent ->
                     startForProfileImageResult.launch(intent)
                 }

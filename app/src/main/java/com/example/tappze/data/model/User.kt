@@ -1,6 +1,5 @@
 package com.example.tappze.data.model
 
-import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -17,7 +16,7 @@ data class User(
     var number: String = "",
     var details: String = "",
     var company: String = "",
-    var links: Map<String, String> = mapOf("key" to "value"),
+    var links: Map<String, String> = mapOf(),
     var image: String = "",
     var gender: String = "",
     var status: Boolean = true,

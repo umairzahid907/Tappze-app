@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
+import com.example.tappze.data.model.User
 import com.example.tappze.databinding.ActivityMainBinding
 import com.example.tappze.util.UiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,9 +27,10 @@ class MainActivity : AppCompatActivity() {
                 is UiState.Loading -> {
                 }
                 is UiState.Failure -> {
+
                 }
                 is UiState.Success -> {
-                    if(binding.navHost.findNavController().currentDestination?.id != R.id.homeFragment) {
+                    if(binding.navHost.findNavController().currentDestination?.id != R.id.profileFragment) {
                         binding.navHost.findNavController()
                             .navigate(R.id.action_welcomeFragment_to_homeFragment)
                     }

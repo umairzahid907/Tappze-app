@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tappze.data.model.User
-import com.example.tappze.data.model.UserDao
 import com.example.tappze.data.repository.UserRepository
 import com.example.tappze.util.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel

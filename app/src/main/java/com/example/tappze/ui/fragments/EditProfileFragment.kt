@@ -22,6 +22,7 @@ import com.example.tappze.util.*
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClickListener, OnItemListener {
@@ -79,12 +80,14 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
                 }
         }
         binding.btnDob.setOnClickListener {
+
             val datePickerDialog = DatePickerDialog(
                 requireContext(), { _, year, month, dayOfMonth ->
                     val date = "$dayOfMonth/${month + 1}/$year"
                     binding.btnDob.text = date
                 }, 1990, 0, 1
             )
+            datePickerDialog.datePicker.maxDate = Date().time
             datePickerDialog.show()
         }
         observer()
@@ -156,10 +159,12 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
                        if(it.data?.dob?.isNotEmpty() == true){
                            view.btnDob.text = it.data.dob
                        }
-                       Picasso.get()
-                           .load(it.data?.image)
-                           .placeholder(R.drawable.placeholder)
-                           .into(binding.profilePhoto)
+                       if (user?.image?.isNotEmpty() == true) {
+                           Picasso.get()
+                               .load(it.data?.image)
+                               .placeholder(R.drawable.placeholder)
+                               .into(binding.profilePhoto)
+                       }
                    }
                 }
             }
@@ -172,11 +177,11 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
                 }
                 is UiState.Failure -> {
                     binding.progressBar.hide()
-                    toast(it.error)
+                    it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
                     binding.progressBar.hide()
-                    toast(it.data)
+                    alertDialog(true, it.data)
                     findNavController().navigate(R.id.profileFragment)
                 }
             }

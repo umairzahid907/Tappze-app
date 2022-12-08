@@ -13,6 +13,7 @@ import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentSettingsBinding
 import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.UiState
+import com.example.tappze.util.alertDialog
 import com.example.tappze.util.hide
 import com.example.tappze.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     lateinit var binding: FragmentSettingsBinding
     private val viewModel: UserViewModel by viewModels()
     var user: User? = null
+    var count = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,12 +45,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 when(checkedId){
                     R.id.btnOn -> {
                         user?.status = true
-                        user?.let { viewModel.updateUser(it) }
+                        if(count != 1) {
+                            user?.let { viewModel.updateUser(it) }
+                            count += 1
+                        }
                         observer()
                     }
                     R.id.btnOff -> {
                         user?.status = false
-                        user?.let { viewModel.updateUser(it) }
+                        if(count != 1) {
+                            user?.let { viewModel.updateUser(it) }
+                            count += 1
+                        }
                         observer()
                     }
                 }
@@ -82,7 +90,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 is UiState.Loading -> {
                 }
                 is UiState.Failure -> {
-                    toast(it.error)
+                    it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
                     user = it.data!!
@@ -91,6 +99,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     }else{
                         binding.toggleButton.check(R.id.btnOff)
                     }
+                    alertDialog(true, "Profile status updated")
                 }
             }
         }
@@ -100,10 +109,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 is UiState.Loading -> {
                 }
                 is UiState.Failure -> {
-                    toast(it.error)
+                    it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
-                    toast("Status updated")
+                    alertDialog(true, "Status updated")
                 }
             }
         }

@@ -56,10 +56,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
                 is UiState.Failure -> {
                     progress.hide()
-                    toast(it.error)
+                    it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
                     progress.hide()
+                    alertDialog(true, it.data)
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
             }

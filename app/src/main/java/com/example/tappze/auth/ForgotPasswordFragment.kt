@@ -35,11 +35,11 @@ class ForgotPasswordFragment : BottomSheetDialogFragment(R.layout.fragment_forgo
             when(state){
                 is UiState.Loading -> { }
                 is UiState.Failure -> {
-                    toast(state.error)
+                    state.error?.let { alertDialog(false, it) }
                     dismiss()
                 }
                 is UiState.Success -> {
-                    toast(state.data)
+                    alertDialog(true, state.data)
                     dismiss()
                 }
             }

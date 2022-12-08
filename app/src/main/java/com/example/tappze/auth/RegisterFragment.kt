@@ -48,10 +48,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 }
                 is UiState.Failure -> {
                     progress.hide()
-                    toast(it.error)
+                    it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
                     progress.hide()
+                    alertDialog(true, it.data)
                     findNavController().navigate(R.id.action_registerFragment_to_homeFragment,
                     Bundle().apply
                      {

@@ -1,6 +1,12 @@
 package com.example.tappze.util
 
+import android.app.Dialog
+import android.content.Context
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.tappze.R
@@ -19,6 +25,26 @@ fun View.show(){
 
 fun Fragment.toast(msg: String?){
     Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
+}
+
+fun Fragment.alertDialog(status: Boolean, text: String){
+    val dial = Dialog(this.requireContext())
+    dial.setContentView(R.layout.alert_dialog)
+    dial.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    dial.window?.setBackgroundDrawableResource(android.R.color.transparent);
+    val ok = dial.findViewById<Button>(R.id.btnOk)
+    val tvText = dial.findViewById<TextView>(R.id.tvText)
+    tvText?.text = text
+    val img = dial.findViewById<ImageView>(R.id.topImg)
+    if(status){
+        img.setImageResource(R.drawable.ic_success)
+    }else{
+        img.setImageResource(R.drawable.ic_error)
+    }
+    ok?.setOnClickListener {
+        dial.dismiss()
+    }
+    dial.show()
 }
 
 fun TextInputLayout.validate(child: TextInputEditText?): Boolean{

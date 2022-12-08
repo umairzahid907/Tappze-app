@@ -74,7 +74,7 @@ class BottomPopupFragment(
                 launchIntent.putExtra(Intent.ACTION_VIEW, Uri.parse("https://www.${link.first.lowercase()}.com/${link.second}"))
                 startActivity(launchIntent)
             } else {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.${link.first.lowercase()}.com/${link.second}"))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com"))
                 context?.startActivity(intent)
             }
         }

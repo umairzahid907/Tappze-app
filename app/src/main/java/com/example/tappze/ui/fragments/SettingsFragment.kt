@@ -12,10 +12,7 @@ import com.example.tappze.auth.ForgotPasswordFragment
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentSettingsBinding
 import com.example.tappze.ui.viewmodel.UserViewModel
-import com.example.tappze.util.UiState
-import com.example.tappze.util.alertDialog
-import com.example.tappze.util.hide
-import com.example.tappze.util.toast
+import com.example.tappze.util.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,17 +44,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         user?.status = true
                         if(count != 1) {
                             user?.let { viewModel.updateUser(it) }
-                            count += 1
                         }
-                        observer()
+                        count += 1
                     }
                     R.id.btnOff -> {
                         user?.status = false
                         if(count != 1) {
                             user?.let { viewModel.updateUser(it) }
-                            count += 1
                         }
-                        observer()
+                        count += 1
                     }
                 }
             }
@@ -88,18 +83,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewModel.user.observe(viewLifecycleOwner){
             when(it){
                 is UiState.Loading -> {
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     user = it.data!!
                     if(it.data.status){
                         binding.toggleButton.check(R.id.btnOn)
                     }else{
                         binding.toggleButton.check(R.id.btnOff)
                     }
-                    alertDialog(true, "Profile status updated")
                 }
             }
         }
@@ -107,11 +104,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewModel.updateUser.observe(viewLifecycleOwner) {
             when (it) {
                 is UiState.Loading -> {
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     it.error?.let { it1 -> alertDialog(false, it1) }
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     alertDialog(true, "Status updated")
                 }
             }

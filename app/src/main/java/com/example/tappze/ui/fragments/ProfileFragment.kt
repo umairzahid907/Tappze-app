@@ -1,14 +1,12 @@
 package com.example.tappze.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tappze.R
-import com.example.tappze.data.model.UserDao
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentProfileBinding
 import com.example.tappze.ui.viewmodel.UserViewModel
@@ -17,10 +15,10 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener {
+class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener, OnItemListener {
 
     lateinit var binding: FragmentProfileBinding
-    private var links: Map<String, String>? = null
+    private var links: MutableMap<String, String>? = null
     private lateinit var adapter: RVAdapter
     private val viewModel: UserViewModel by viewModels()
 
@@ -36,7 +34,7 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
     }
 
     override fun onItemClicked(link: Pair<String, String>) {
-        BottomPopupFragment(link).show(childFragmentManager, "link")
+        BottomPopupFragment(link, this, true).show(childFragmentManager, "link")
     }
 
 
@@ -56,7 +54,7 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
     }
 
     private fun updateUI(user: User){
-        links = user.links
+        links = user.links.toMutableMap()
         val array: Array<Pair<String, String>>? = links?.toList()?.toTypedArray()
         adapter = links?.let { RVAdapter(array, this) }!!
         binding.rvGrid.adapter = adapter
@@ -68,5 +66,14 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
                 .into(binding.profilePhoto)
         }
     }
+
+    override fun onItemDelete(key: String) {
+        links?.remove(key)
+        val array: Array<Pair<String, String>>? = links?.toList()?.toTypedArray()
+        adapter = links?.let { RVAdapter(array, this) }!!
+        binding.rvGrid.adapter = adapter
+    }
+
+    override fun onItemSave(links: MutableMap<String, String>) {}
 
 }

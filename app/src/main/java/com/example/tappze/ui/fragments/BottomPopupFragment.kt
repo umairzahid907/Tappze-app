@@ -1,9 +1,7 @@
 package com.example.tappze.ui.fragments
 
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -22,7 +20,11 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetDialogFragment(R.layout.fragment_bottom_popup) {
+class BottomPopupFragment(
+        private val link: Pair<String, String>,
+        private val itemDeleteListener: OnItemListener?,
+        private val save: Boolean
+    ) : BottomSheetDialogFragment(R.layout.fragment_bottom_popup) {
 
     lateinit var binding: FragmentBottomPopupBinding
     private val viewModel: UserViewModel by viewModels()
@@ -83,10 +85,14 @@ class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetD
         viewModel.user.observe(viewLifecycleOwner){
             when(it){
                 is UiState.Loading -> {
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
+                    toast(it.error)
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     user = it.data!!
                     links = user.links.toMutableMap()
                 }
@@ -102,7 +108,11 @@ class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetD
             links[link.first] = binding.textInput.text.toString()
         }
         user.links = links
-        viewModel.updateUser(user)
+        if(save) {
+            viewModel.updateUser(user)
+        }else{
+            itemDeleteListener?.onItemSave(links)
+        }
         dismiss()
     }
 
@@ -112,15 +122,12 @@ class BottomPopupFragment(private val link: Pair<String, String>) : BottomSheetD
         }
         user.links = links
         viewModel.updateUser(user)
+        itemDeleteListener?.onItemDelete(link.first)
         dismiss()
     }
+}
 
-    private fun isAppInstalled(packageName: String, context: Context?): Boolean? {
-        return try {
-            val packageManager = context?.packageManager
-            packageManager?.getApplicationInfo(packageName, 0)?.enabled
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
-        }
-    }
+interface OnItemListener{
+    fun onItemDelete(key: String)
+    fun onItemSave(links: MutableMap<String, String>)
 }

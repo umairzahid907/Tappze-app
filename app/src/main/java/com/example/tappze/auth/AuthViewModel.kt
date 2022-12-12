@@ -47,7 +47,7 @@ class AuthViewModel @Inject constructor(
             email = email,
             password = password
         ){
-            _login.value = it
+            _login.postValue(it)
         }
     }
 

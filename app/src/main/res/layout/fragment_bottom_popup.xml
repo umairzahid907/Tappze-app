@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/dialog"
     android:backgroundTint="@color/white"
-    tools:context=".fragments.BottomPopupFragment">
+    tools:context=".ui.fragments.BottomPopupFragment">
 
 
     <TextView

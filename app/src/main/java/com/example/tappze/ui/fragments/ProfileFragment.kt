@@ -1,14 +1,17 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.tappze.R
+import com.example.tappze.data.model.UserDao
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentProfileBinding
+import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.*
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +21,7 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
 
     lateinit var binding: FragmentProfileBinding
     private var links: Map<String, String>? = null
-    lateinit var adapter: RVAdapter
+    private lateinit var adapter: RVAdapter
     private val viewModel: UserViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,10 +61,12 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
         adapter = links?.let { RVAdapter(array, this) }!!
         binding.rvGrid.adapter = adapter
         binding.tvName.text = user.name
-        Picasso.get()
-            .load(user.image)
-            .placeholder(R.drawable.placeholder)
-            .into(binding.profilePhoto)
+        if (user.image.isNotEmpty()){
+            Picasso.get()
+                .load(user.image)
+                .placeholder(R.drawable.placeholder)
+                .into(binding.profilePhoto)
+        }
     }
 
 }

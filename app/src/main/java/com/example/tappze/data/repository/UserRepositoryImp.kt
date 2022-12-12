@@ -5,8 +5,10 @@ import com.example.tappze.data.model.User
 import com.example.tappze.data.model.UserDao
 import com.example.tappze.util.FireStoreTables
 import com.example.tappze.util.UiState
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +25,7 @@ class UserRepositoryImp(
     var user: User? = null
     override fun getUser(result: (UiState<User?>) -> Unit) {
         try {
-            CoroutineScope(Dispatchers.Main).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 user = userDao.getUserFromDatabase()
             }.invokeOnCompletion {
                 if (user?.id?.isNotEmpty() == true) {
@@ -65,6 +67,7 @@ class UserRepositoryImp(
 
     override fun deleteUser(result: (UiState<String>) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
+            Firebase.auth.signOut()
             userDao.deleteUserFromDatabase()
         }.invokeOnCompletion {
             result.invoke(

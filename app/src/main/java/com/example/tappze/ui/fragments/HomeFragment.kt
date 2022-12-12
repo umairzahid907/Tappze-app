@@ -1,5 +1,6 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -21,7 +22,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val navHostFragment = childFragmentManager.findFragmentById(R.id.fragmentContainerView)
         val navController = navHostFragment?.findNavController()
         navController?.let { binding.bottomNavigation.setupWithNavController(it) }
-
     }
 
 }

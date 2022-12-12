@@ -1,5 +1,6 @@
 package com.example.tappze.data.repository
 
+import android.util.Log
 import com.example.tappze.data.model.User
 import com.example.tappze.data.model.UserDao
 import com.example.tappze.util.FireStoreTables
@@ -78,11 +79,21 @@ class AuthRepositoryImp(
 
     override fun loginUser(email: String, password: String, result: (UiState<String>) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                it.user?.uid?.let { it1 -> addUserToLocalDatabase(it1) }
-                result.invoke(
-                    UiState.Success("Logged in successfully")
-                )
+            .addOnSuccessListener { response ->
+                response.user?.uid?.let {
+                    database.collection(FireStoreTables.USER).document(it)
+                        .get()
+                        .addOnSuccessListener {
+                            val user = it.toObject(User::class.java)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                user?.let { it1 -> userDao.addUserToDatabase(it1) }
+                            }.invokeOnCompletion {
+                                result.invoke(
+                                    UiState.Success("Logged in successfully")
+                                )
+                            }
+                        }
+                }
             }
             .addOnFailureListener { error ->
                 result.invoke(
@@ -107,15 +118,6 @@ class AuthRepositoryImp(
             }
     }
 
-    private fun addUserToLocalDatabase(id: String){
-       database.collection(FireStoreTables.USER).document(id)
-           .get()
-           .addOnSuccessListener {
-               val user = it.toObject(User::class.java)
-               CoroutineScope(Dispatchers.IO).launch {
-                   user?.let { it1 -> userDao.addUserToDatabase(it1) }
-               }
-           }
-    }
+
 
 }

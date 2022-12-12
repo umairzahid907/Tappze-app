@@ -1,26 +1,27 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.example.tappze.R
-import com.example.tappze.databinding.FragmentShareBinding
+import com.example.tappze.databinding.FragmentAnalyticsBinding
+import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.UiState
 import com.example.tappze.util.toast
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ShareFragment : Fragment(R.layout.fragment_share) {
+class AnalyticsFragment : Fragment(R.layout.fragment_analytics) {
 
-    lateinit var binding: FragmentShareBinding
+    lateinit var binding: FragmentAnalyticsBinding
     private val viewModel: UserViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentShareBinding.bind(view)
+        binding = FragmentAnalyticsBinding.bind(view)
         viewModel.user()
         observer()
     }

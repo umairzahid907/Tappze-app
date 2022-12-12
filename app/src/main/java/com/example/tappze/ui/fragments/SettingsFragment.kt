@@ -1,4 +1,4 @@
-package com.example.tappze.fragments
+package com.example.tappze.ui.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +11,7 @@ import com.example.tappze.R
 import com.example.tappze.auth.ForgotPasswordFragment
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentSettingsBinding
+import com.example.tappze.ui.viewmodel.UserViewModel
 import com.example.tappze.util.UiState
 import com.example.tappze.util.hide
 import com.example.tappze.util.toast
@@ -54,6 +55,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
         }
         binding.tvPurchase.setOnClickListener {
+            val urlIntent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://tappze.com")
+            )
+            startActivity(urlIntent)
+        }
+        binding.tvSubscriptions.setOnClickListener {
             val urlIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse("https://tappze.com")

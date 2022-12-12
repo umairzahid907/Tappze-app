@@ -11,6 +11,7 @@
     <string name="select_dob">Select DOB</string>
     <string name="ok">ok</string>
     <string name="instructions">Instructions</string>
+    <string name="link">https://profile.tappze.ca/8y7XN2V0GpgBJqCcGrGAe9UuaI43</string>
     <string-array name="Gender">
         <item>Male</item>
         <item>Female</item>

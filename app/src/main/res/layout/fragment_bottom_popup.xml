@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/dialog"
     android:backgroundTint="@color/white"
-    tools:context=".ui.fragments.BottomPopupFragment">
+    tools:context=".ui.fragments.BottomPopupFragment"
+    android:windowSoftInputMode="adjustPan">
 
 
     <TextView
@@ -129,6 +130,17 @@
         app:layout_constraintStart_toEndOf="@+id/btnOpen"
         app:layout_constraintTop_toBottomOf="@+id/inputLayout" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/black"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

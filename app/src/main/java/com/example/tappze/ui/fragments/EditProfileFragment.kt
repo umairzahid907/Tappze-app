@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.net.Uri
 import android.widget.Toast
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
@@ -23,7 +24,7 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClickListener {
+class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClickListener, OnItemListener {
 
     lateinit var binding: FragmentEditProfileBinding
     private val viewModel: UserViewModel by viewModels()
@@ -183,7 +184,16 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
     }
 
     override fun onItemClicked(link: Pair<String, String>) {
-        BottomPopupFragment(link).show(childFragmentManager, "link")
+        BottomPopupFragment(link, this, false).show(childFragmentManager, "link")
+    }
+
+    override fun onItemDelete(key: String) {
+        links?.remove(key)
+    }
+
+    override fun onItemSave(links: MutableMap<String, String>) {
+        Log.d("===", links.keys.toString())
+        this.links?.plusAssign(links)
     }
 
 }

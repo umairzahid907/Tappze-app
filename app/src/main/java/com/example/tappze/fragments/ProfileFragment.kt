@@ -55,7 +55,7 @@ class ProfileFragment: Fragment(R.layout.fragment_profile), OnItemClickListener 
 //                    }
                     Picasso.get()
                         .load(it.data?.image)
-                        .placeholder(R.drawable.placeholder_white)
+                        .placeholder(R.drawable.placeholder)
                         .into(binding.profilePhoto)
                 }
             }

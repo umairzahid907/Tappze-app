@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.tappze.R
 import com.example.tappze.data.model.User
 import com.example.tappze.databinding.FragmentBottomPopupBinding

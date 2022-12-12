@@ -124,11 +124,14 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
         viewModel.user.observe(viewLifecycleOwner){
             when(it){
                 is UiState.Loading -> {
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     toast(it.error)
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                    binding.let { view ->
                        links = it.data?.links?.toMutableMap()
                        user = it.data
@@ -149,11 +152,14 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile), OnItemClic
         viewModel.updateUser.observe(viewLifecycleOwner){
             when(it){
                 is UiState.Loading -> {
+                    binding.progressBar.show()
                 }
                 is UiState.Failure -> {
+                    binding.progressBar.hide()
                     toast(it.error)
                 }
                 is UiState.Success -> {
+                    binding.progressBar.hide()
                     toast(it.data)
                     findNavController().navigate(R.id.profileFragment)
                 }

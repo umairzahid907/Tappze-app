@@ -46,5 +46,10 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
     </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        tools:layout="@layout/fragment_edit_profile"
+        android:name="com.example.tappze.fragments.EditProfileFragment"
+        android:label="EditProfileFragment" />
 
 </navigation>
